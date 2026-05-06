@@ -1,4 +1,4 @@
-# LAB 09
+# LAB 10
 
 ## Opis
 Zrobilem cube ktory rusza sie po danej sciezce oraz mozna sterowac go uzywajac strzalek na klawiaturze.
