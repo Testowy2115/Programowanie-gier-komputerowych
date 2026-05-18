@@ -1,0 +1,4 @@
+res://scenes/farm/farm.tscn
+res://scenes/characters/player/player.tscn
+res://scenes/characters/player/player.gd
+res://scenes/farm/farm.gd
