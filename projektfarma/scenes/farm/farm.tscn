@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://uijdomoh51x7"]
 
-[ext_resource type="Script" uid="uid://cx4x0m4f4p5f3" path="res://scenes/farm/farm.gd" id="1_farmgd"]
+[ext_resource type="Script" uid="uid://cdkba5mq6dbuf" path="res://scenes/farm/farm.gd" id="1_farmgd"]
 [ext_resource type="TileSet" uid="uid://fpk5nsgyl8i3" path="res://Tilesets/game_tile_set.tres" id="1_wgrn4"]
 [ext_resource type="PackedScene" uid="uid://duo6b8teh4nn6" path="res://scenes/characters/player/player.tscn" id="2_fev0l"]
+[ext_resource type="PackedScene" uid="uid://b7y2q2nqwxy8" path="res://scenes/ui/farm_ui.tscn" id="3_ui"]
 
 [node name="Farm" type="Node2D" unique_id=1888912941]
 script = ExtResource("1_farmgd")
+
+[node name="FarmUI" parent="." unique_id=1883901111 instance=ExtResource("3_ui")]
 
 [node name="GameMap" type="Node2D" parent="." unique_id=1144362650]
 
@@ -13,4 +16,4 @@ script = ExtResource("1_farmgd")
 tile_set = ExtResource("1_wgrn4")
 
 [node name="Player" parent="GameMap" unique_id=1735978271 instance=ExtResource("2_fev0l")]
-position = Vector2(482, 312)
+speed = null

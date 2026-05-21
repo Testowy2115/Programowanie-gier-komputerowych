@@ -1,4 +1,8 @@
-res://scenes/farm/farm.tscn
-res://scenes/characters/player/player.tscn
-res://scenes/characters/player/player.gd
+res://scenes/ui/resource_counter.tscn
+res://scenes/ui/farm_ui.tscn
+res://scenes/ui/backpack_panel.tscn
+res://scenes/farm/bee.gd
 res://scenes/farm/farm.gd
+res://scenes/farm/farm.tscn
+res://scenes/farm/flower.gd
+res://scenes/ui/farm_ui.gd

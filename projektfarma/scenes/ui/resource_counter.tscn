@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://35vyr2whvf2n"]
+
+[ext_resource type="Script" uid="uid://cmugh62rh77l8" path="res://scenes/ui/resource_counter.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://cbyywbv1ho4dk" path="res://assets/game/fonts/04B.TTF" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://t4foiv4d3w0e" path="res://assets/game/ui/pollen.png" id="3_pollen"]
+
+[node name="ResourceCounter" type="Control" unique_id=387231860]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -35.0
+offset_right = 230.0
+offset_bottom = 35.0
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=1741200916]
+texture_filter = 1
+layout_mode = 1
+offset_top = 9.0
+offset_right = 52.0
+offset_bottom = 61.0
+texture = ExtResource("3_pollen")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ValueLabel" type="Label" parent="." unique_id=605462017]
+layout_mode = 1
+offset_left = 60.0
+offset_top = 8.0
+offset_right = 210.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.02, 0.03, 0.04, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "0/0"
+vertical_alignment = 1
