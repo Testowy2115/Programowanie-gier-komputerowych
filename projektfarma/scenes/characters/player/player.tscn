@@ -153,3 +153,6 @@ shape = SubResource("CircleShape2D_hv5x3")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=200136013]
 zoom = Vector2(1, 1)
+
+[node name="FootstepPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -12.0

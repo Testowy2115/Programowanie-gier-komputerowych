@@ -1,21 +1,27 @@
 extends Area2D
 
-const FLOWERS_DIR = "res://assets/game/flowers"
-
+@export var flower_folder: String = ""
 var max_nectar: float = 10.0
 var nectar_amount: float = 10.0
-var texture_path: String = ""
+@export var respawn_time: float = 8.0
+@export var texture_path: String = ""
 
 @onready var shape = CollisionShape2D.new()
 var sprite: Sprite2D = null
+var respawn_timer: Timer = null
 
 func _ready():
 	add_to_group("flowers")
 	var rect_shape = RectangleShape2D.new()
-	rect_shape.size = Vector2(24, 24)
+	rect_shape.size = Vector2(32, 32)
 	shape.shape = rect_shape
 	add_child(shape)
 	setup_sprite()
+	respawn_timer = Timer.new()
+	respawn_timer.one_shot = true
+	respawn_timer.wait_time = respawn_time
+	respawn_timer.timeout.connect(_on_respawn_timeout)
+	add_child(respawn_timer)
 
 func _process(_delta):
 	var scale_factor = max(0.3, nectar_amount / max_nectar)
@@ -40,8 +46,11 @@ func setup_sprite() -> void:
 	add_child(sprite)
 
 func get_random_flower_texture_path() -> String:
+	if flower_folder == "":
+		return ""
+
 	var textures = []
-	var dir = DirAccess.open(FLOWERS_DIR)
+	var dir = DirAccess.open(flower_folder)
 	if dir == null:
 		return ""
 
@@ -49,7 +58,7 @@ func get_random_flower_texture_path() -> String:
 	var file_name = dir.get_next()
 	while file_name != "":
 		if not dir.current_is_dir() and file_name.get_extension().to_lower() in ["png", "webp", "jpg", "jpeg"]:
-			textures.append(FLOWERS_DIR + "/" + file_name)
+			textures.append(flower_folder + "/" + file_name)
 		file_name = dir.get_next()
 	dir.list_dir_end()
 
@@ -58,6 +67,9 @@ func get_random_flower_texture_path() -> String:
 	return textures[randi() % textures.size()]
 
 func gather(bee: Node2D, delta: float):
+	if nectar_amount <= 0:
+		return
+
 	var rate = 2.0
 	if "honey_rate" in bee.bee_data:
 		rate = float(bee.bee_data["honey_rate"]) / 5.0
@@ -70,13 +82,20 @@ func gather(bee: Node2D, delta: float):
 	bee.gather_nectar(amount)
 	
 	if nectar_amount <= 0:
-		queue_free()
+		nectar_amount = 0
+		visible = false
+		shape.disabled = true
+		respawn_timer.start()
+
+func _on_respawn_timeout() -> void:
+	nectar_amount = max_nectar
+	visible = true
+	shape.disabled = false
 
 func _draw():
 	if sprite != null:
 		return
 
-	# testowy kwiat 
 	draw_line(Vector2(0, 0), Vector2(0, 8), Color(0.2, 0.8, 0.2), 4.0)
 	draw_circle(Vector2(-6, -6), 6.0, Color(1.0, 0.4, 0.7))
 	draw_circle(Vector2(6, -6), 6.0, Color(1.0, 0.4, 0.7))

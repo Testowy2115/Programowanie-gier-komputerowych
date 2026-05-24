@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scenes/farm/arenas/tile_arena.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/game/tiles/desert.png" id="2_desert"]
+[ext_resource type="PackedScene" path="res://scenes/farm/flower.tscn" id="3_flower"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(512, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(512, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(16, 384)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(16, 384)
+
+[node name="DesertArena" type="Node2D"]
+script = ExtResource("1_script")
+tile_texture = ExtResource("2_desert")
+arena_tiles = Vector2i(32, 24)
+tile_size = 16
+metadata/unlock_pollen = 250
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="Borders" type="Node2D" parent="."]
+
+[node name="Top" type="StaticBody2D" parent="Borders"]
+position = Vector2(0, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Top"]
+shape = SubResource("RectangleShape2D_top")
+
+[node name="Bottom" type="StaticBody2D" parent="Borders"]
+position = Vector2(0, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Bottom"]
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="Left" type="StaticBody2D" parent="Borders"]
+position = Vector2(-264, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left"]
+shape = SubResource("RectangleShape2D_left")
+
+[node name="Right" type="StaticBody2D" parent="Borders"]
+position = Vector2(264, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Right"]
+shape = SubResource("RectangleShape2D_right")
+
+[node name="Flowers" type="Node2D" parent="."]
+
+[node name="Cactus" parent="Flowers" instance=ExtResource("3_flower")]
+position = Vector2(-160, -78)
+texture_path = "res://assets/game/flowers/desert/cactus.png"
+
+[node name="TanShrub" parent="Flowers" instance=ExtResource("3_flower")]
+position = Vector2(-70, 86)
+texture_path = "res://assets/game/flowers/desert/Tan_Shrub.png"
+
+[node name="Cactus2" parent="Flowers" instance=ExtResource("3_flower")]
+position = Vector2(92, -52)
+texture_path = "res://assets/game/flowers/desert/cactus.png"
+
+[node name="TanShrub2" parent="Flowers" instance=ExtResource("3_flower")]
+position = Vector2(168, 96)
+texture_path = "res://assets/game/flowers/desert/Tan_Shrub.png"

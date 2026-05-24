@@ -1,52 +1,63 @@
 extends Node2D
 
-var max_flowers_on_map = 15
+var arena_unlock_states = {}
+var game_finished = false
+@onready var arenas_container = $GameMap/Arenas
+
+const END_SCREEN_PATH = "res://scenes/ui/end_screen.tscn"
 
 func _ready() -> void:
-		var grass_bg = ColorRect.new()
-		grass_bg.color = Color(0.3, 0.6, 0.3)
-		grass_bg.size = Vector2(800, 800)
-		grass_bg.position = Vector2(-400, -400)
-		grass_bg.z_index = -1
-		add_child(grass_bg)
+	update_arena_locks()
 
-		# Granice mapy
-		create_border(Vector2(0, -400), Vector2(800, 50)) 
-		create_border(Vector2(0, 400), Vector2(800, 50)) 
-		create_border(Vector2(-400, 0), Vector2(50, 800))
-		create_border(Vector2(400, 0), Vector2(50, 800))
-		
-		spawn_flowers(10)
-		
-		var spawn_timer = Timer.new()
-		spawn_timer.wait_time = 3.0
-		spawn_timer.autostart = true
-		spawn_timer.timeout.connect(_on_flower_spawn_timeout)
-		add_child(spawn_timer)
+func _process(_delta: float) -> void:
+	update_arena_locks()
 
-func _on_flower_spawn_timeout() -> void:
-	if get_tree().get_nodes_in_group("flowers").size() < max_flowers_on_map:
-		spawn_flowers(1)
-
-func create_border(pos: Vector2, rect_size: Vector2) -> void:
-		var wall = StaticBody2D.new()
-		var collision = CollisionShape2D.new()
-		var shape = RectangleShape2D.new()
-
-		shape.size = rect_size
-		collision.shape = shape
-		wall.position = pos
-
-		wall.add_child(collision)
-		add_child(wall)
-
-func spawn_flowers(amount: int):
-	var flower_script = load("res://scenes/farm/flower.gd")
-	if flower_script == null:
+func update_arena_locks() -> void:
+	var player = get_tree().get_first_node_in_group("player")
+	if player == null:
 		return
-		
-	for i in range(amount):
-		var flower = Area2D.new()
-		flower.set_script(flower_script)
-		flower.position = Vector2(randf_range(-300, 300), randf_range(-300, 300))
-		add_child(flower)
+
+	var arenas = arenas_container.get_children()
+	var unlocked_states = []
+	for arena in arenas:
+		var unlock_pollen = int(arena.get_meta("unlock_pollen", 0))
+		var earned_pollen = player.get("total_pollen_earned")
+		if earned_pollen == null:
+			earned_pollen = player.pollen
+		unlocked_states.append(earned_pollen >= unlock_pollen)
+
+	for i in range(arenas.size()):
+		var arena = arenas[i]
+		var unlocked = unlocked_states[i]
+		var was_unlocked = arena_unlock_states.get(arena.name, unlocked)
+		arena.visible = true
+		arena.modulate = Color.WHITE if unlocked else Color(0.25, 0.25, 0.25, 0.45)
+		set_arena_border_enabled(arena, "Top", unlocked)
+		set_arena_border_enabled(arena, "Bottom", unlocked)
+		set_arena_border_enabled(arena, "Left", unlocked and (i == 0 or not unlocked_states[i - 1]))
+		set_arena_border_enabled(arena, "Right", unlocked and (i == arenas.size() - 1 or not unlocked_states[i + 1]))
+		if unlocked and not was_unlocked:
+			show_zone_unlocked(arena.name)
+			if i == arenas.size() - 1:
+				finish_game()
+		arena_unlock_states[arena.name] = unlocked
+
+func set_arena_border_enabled(arena: Node, border_name: String, enabled: bool) -> void:
+	var border = arena.get_node_or_null("Borders/" + border_name)
+	if border == null:
+		return
+	for child in border.get_children():
+		if child is CollisionShape2D:
+			child.disabled = not enabled
+
+func show_zone_unlocked(zone_name: String) -> void:
+	var farm_ui = get_node_or_null("FarmUI")
+	if farm_ui != null and farm_ui.has_method("show_zone_unlocked"):
+		farm_ui.show_zone_unlocked(zone_name)
+
+func finish_game() -> void:
+	if game_finished:
+		return
+	game_finished = true
+	await get_tree().create_timer(2.4).timeout
+	get_tree().change_scene_to_file(END_SCREEN_PATH)

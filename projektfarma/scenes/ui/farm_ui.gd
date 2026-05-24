@@ -4,7 +4,7 @@ var animals = [
 		{"name": "Mythic Cosmos Bee", "chance": 10000, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/classicbee.png", "honey_rate": 50},
 		{"name": "Legendary Diamond Bee", "chance": 1000, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/classicbee.png", "honey_rate": 20},
 		{"name": "Epic Fire Bee", "chance": 250, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/classicbee.png", "honey_rate": 10},
-		{"name": "Rare Ninja Bee", "chance": 100, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/classicbee.png", "honey_rate": 5},
+		{"name": "Rare Ninja Bee", "chance": 100, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/ninjabee.png", "honey_rate": 5},
 		{"name": "Uncommon Bee", "chance": 20, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/classicbee.png", "honey_rate": 2},
 		{"name": "Common Bee", "chance": 1, "color": Color(1.0, 1.0, 1.0, 1.0), "texture": "res://assets/game/animals/classicbee.png", "honey_rate": 1}
 ]
@@ -16,6 +16,7 @@ var animals = [
 
 @onready var dim_bg = $UI/DimBackground
 @onready var pollen_counter = $UI/PollenCounter
+@onready var zone_unlock_label = $UI/ZoneUnlockLabel
 @onready var focus_arrows = $UI/FocusArrows
 
 @onready var backpack_panel = $BackpackPanel
@@ -24,6 +25,17 @@ var animals = [
 @onready var equipped_container = $BackpackPanel/EquippedContainer
 @onready var equip_best_button = $BackpackPanel/EquipBestButton
 @onready var equipped_label = $BackpackPanel/EquippedLabel
+@onready var upgrade_button = $UI/BottomBar/UpgradeButton
+@onready var upgrade_panel = $UpgradePanel
+@onready var upgrade_close_button = $UpgradePanel/CloseButton
+@onready var buy_luck_button = $UpgradePanel/LuckRow/BuyLuckButton
+@onready var buy_equip_slot_button = $UpgradePanel/EquipSlotRow/BuyEquipSlotButton
+@onready var luck_level_label = $UpgradePanel/LuckRow/LuckLevelLabel
+@onready var luck_cost_label = $UpgradePanel/LuckRow/LuckCostLabel
+@onready var equip_slot_level_label = $UpgradePanel/EquipSlotRow/EquipSlotLevelLabel
+@onready var equip_slot_cost_label = $UpgradePanel/EquipSlotRow/EquipSlotCostLabel
+@onready var pollen_collect_sfx: AudioStreamPlayer = $Sfx/PollenCollect
+@onready var zone_unlock_sfx: AudioStreamPlayer = $Sfx/ZoneUnlock
 
 var is_rolling = false
 var is_roll_locked = false
@@ -32,14 +44,35 @@ var visual_update_timer = 0.0
 var final_result = {}
 var roll_fx_tween: Tween = null
 var roll_end_tween: Tween = null
+var zone_unlock_tween: Tween = null
+var last_displayed_pollen: int = 0
 
 const PIXEL_FONT_PATH = "res://assets/game/fonts/04B.TTF"
+const POLLEN_COLLECT_SFX_PATHS = [
+	"res://assets/game/audio/sfx/pollen_collect.ogg",
+	"res://assets/game/audio/sfx/pollen_collect.wav",
+	"res://assets/game/audio/sfx/pollen_collect.mp3",
+	"res://assets/game/audio/music/pollen_collect.ogg",
+	"res://assets/game/audio/music/pollen_collect.wav",
+	"res://assets/game/audio/music/pollen_collect.mp3"
+]
+const ZONE_UNLOCK_SFX_PATHS = [
+	"res://assets/game/audio/sfx/zone_unlock.ogg",
+	"res://assets/game/audio/sfx/zone_unlock.wav",
+	"res://assets/game/audio/sfx/zone_unlock.mp3",
+	"res://assets/game/audio/music/zone_unlock.ogg",
+	"res://assets/game/audio/music/zone_unlock.wav",
+	"res://assets/game/audio/music/zone_unlock.mp3"
+]
 var pixel_font: Font = null
 
 var inventory = {}
 var equipped_animals = []
 var max_equipped = 5
 var current_final_node: Node = null
+var luck_level = 0
+var max_luck_level = 10
+var max_equip_slots = 8
 
 const ROLL_VIEW_SIZE = Vector2(320, 300)
 const ROLL_CARD_SIZE = Vector2(300, 140)
@@ -63,18 +96,75 @@ func _ready() -> void:
 	backpack_button.pressed.connect(_on_backpack_button_pressed)
 	close_button.pressed.connect(_on_close_button_pressed)
 	equip_best_button.pressed.connect(_on_equip_best_pressed)
+	upgrade_button.pressed.connect(_on_upgrade_button_pressed)
+	upgrade_close_button.pressed.connect(_on_upgrade_close_pressed)
+	buy_luck_button.pressed.connect(_on_buy_luck_pressed)
+	buy_equip_slot_button.pressed.connect(_on_buy_equip_slot_pressed)
 	setup_icon_button_hover(backpack_button)
 	setup_icon_button_hover(roll_button)
-	setup_icon_button_hover($UI/BottomBar/UpgradeButton)
+	setup_icon_button_hover(upgrade_button)
+	load_audio_stream(pollen_collect_sfx, POLLEN_COLLECT_SFX_PATHS)
+	load_audio_stream(zone_unlock_sfx, ZONE_UNLOCK_SFX_PATHS)
 
 	update_backpack_ui()
+	update_upgrade_ui()
 
 func _process(_delta: float) -> void:
 	var player = get_tree().get_first_node_in_group("player")
 	if player == null or pollen_counter == null:
 		return
+	var displayed_pollen = int(player.pollen)
 	if pollen_counter.has_method("set_value"):
-		pollen_counter.set_value(int(player.pollen), int(player.max_pollen))
+		pollen_counter.set_value(displayed_pollen, 0)
+	if displayed_pollen > last_displayed_pollen:
+		play_sfx(pollen_collect_sfx, false)
+	last_displayed_pollen = displayed_pollen
+	if upgrade_panel != null and upgrade_panel.visible:
+		update_upgrade_ui()
+
+func load_audio_stream(player: AudioStreamPlayer, paths: Array) -> void:
+	if player == null:
+		return
+	for path in paths:
+		if ResourceLoader.exists(path):
+			player.stream = load(path)
+			return
+
+func play_sfx(player: AudioStreamPlayer, restart: bool = true) -> void:
+	if player == null or player.stream == null:
+		return
+	if player.playing and not restart:
+		return
+	if restart:
+		player.stop()
+	player.play()
+
+func show_zone_unlocked(zone_name: String) -> void:
+	if zone_unlock_label == null:
+		return
+	play_sfx(zone_unlock_sfx)
+	if zone_unlock_tween != null and zone_unlock_tween.is_valid():
+		zone_unlock_tween.kill()
+
+	zone_unlock_label.text = "NEW ZONE UNLOCKED!\n" + get_zone_display_name(zone_name)
+	zone_unlock_label.visible = true
+	zone_unlock_label.modulate.a = 0.0
+	zone_unlock_label.scale = Vector2(0.9, 0.9)
+
+	zone_unlock_tween = create_tween()
+	zone_unlock_tween.set_trans(Tween.TRANS_BACK)
+	zone_unlock_tween.set_ease(Tween.EASE_OUT)
+	zone_unlock_tween.tween_property(zone_unlock_label, "modulate:a", 1.0, 0.2)
+	zone_unlock_tween.parallel().tween_property(zone_unlock_label, "scale", Vector2.ONE, 0.2)
+	zone_unlock_tween.tween_interval(1.6)
+	zone_unlock_tween.set_trans(Tween.TRANS_QUAD)
+	zone_unlock_tween.tween_property(zone_unlock_label, "modulate:a", 0.0, 0.35)
+	zone_unlock_tween.tween_callback(func():
+		zone_unlock_label.visible = false
+	)
+
+func get_zone_display_name(zone_name: String) -> String:
+	return zone_name.replace("Arena", " Zone").replace("_", " ").to_upper()
 
 func add_to_inventory(animal: Dictionary) -> void:
 	var animal_name = animal["name"]
@@ -83,6 +173,78 @@ func add_to_inventory(animal: Dictionary) -> void:
 	else:
 		inventory[animal_name] = 1
 	update_backpack_ui()
+
+func get_luck_cost() -> int:
+	return 100 + luck_level * 75
+
+func get_equip_slot_cost() -> int:
+	return 150 + (max_equipped - 5) * 150
+
+func get_luck_multiplier() -> float:
+	return 1.0 + luck_level * 0.12
+
+func get_player() -> Node:
+	return get_tree().get_first_node_in_group("player")
+
+func can_player_afford(cost: int) -> bool:
+	var player = get_player()
+	return player != null and player.pollen >= cost
+
+func spend_player_pollen(cost: int) -> bool:
+	var player = get_player()
+	if player == null:
+		return false
+	if player.has_method("spend_pollen"):
+		return player.spend_pollen(cost)
+	if player.pollen < cost:
+		return false
+	player.pollen -= cost
+	return true
+
+func update_upgrade_ui() -> void:
+	if upgrade_panel == null:
+		return
+	var luck_cost = get_luck_cost()
+	var equip_cost = get_equip_slot_cost()
+	luck_level_label.text = "Level " + str(luck_level) + "/" + str(max_luck_level)
+	equip_slot_level_label.text = "Slots " + str(max_equipped) + "/" + str(max_equip_slots)
+	luck_cost_label.text = "MAX" if luck_level >= max_luck_level else "Cost " + str(luck_cost)
+	equip_slot_cost_label.text = "MAX" if max_equipped >= max_equip_slots else "Cost " + str(equip_cost)
+	buy_luck_button.disabled = luck_level >= max_luck_level or not can_player_afford(luck_cost)
+	buy_equip_slot_button.disabled = max_equipped >= max_equip_slots or not can_player_afford(equip_cost)
+
+func _on_upgrade_button_pressed() -> void:
+	upgrade_panel.visible = not upgrade_panel.visible
+	if upgrade_panel.visible:
+		backpack_panel.visible = false
+		dim_bg.visible = true
+		focus_arrows.visible = false
+		update_upgrade_ui()
+	else:
+		dim_bg.visible = false
+		focus_arrows.visible = true
+
+func _on_upgrade_close_pressed() -> void:
+	upgrade_panel.visible = false
+	dim_bg.visible = false
+	focus_arrows.visible = true
+
+func _on_buy_luck_pressed() -> void:
+	if luck_level >= max_luck_level:
+		return
+	if not spend_player_pollen(get_luck_cost()):
+		return
+	luck_level += 1
+	update_upgrade_ui()
+
+func _on_buy_equip_slot_pressed() -> void:
+	if max_equipped >= max_equip_slots:
+		return
+	if not spend_player_pollen(get_equip_slot_cost()):
+		return
+	max_equipped += 1
+	update_backpack_ui()
+	update_upgrade_ui()
 
 func setup_icon_button_hover(button: Button) -> void:
 	if button == null or not button.has_node("Icon"):
@@ -117,6 +279,7 @@ func _on_backpack_button_pressed() -> void:
 		focus_arrows.visible = true
 	else:
 		backpack_panel.visible = true
+		upgrade_panel.visible = false
 		dim_bg.visible = true
 		focus_arrows.visible = false
 		update_backpack_ui()
@@ -176,7 +339,8 @@ func roll_animal() -> Dictionary:
 	sorted_animals.sort_custom(func(a, b): return a["chance"] > b["chance"])
 	
 	for animal in sorted_animals:
-		if randi() % animal["chance"] == 0:
+		var effective_chance = max(1, int(float(animal["chance"]) / get_luck_multiplier()))
+		if randi() % effective_chance == 0:
 			return animal
 			
 	return animals[animals.size() - 1]
@@ -257,7 +421,6 @@ func _on_roll_button_pressed() -> void:
 	if roll_container != null and is_instance_valid(roll_container):
 		roll_container.queue_free()
 
-	# Elemencik hazardu
 	var screen_size = get_viewport().get_visible_rect().size
 	roll_container = Control.new()
 	roll_container.size = ROLL_VIEW_SIZE

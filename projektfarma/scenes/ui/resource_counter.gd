@@ -17,4 +17,22 @@ func _ready() -> void:
 func set_value(current: int, maximum: int) -> void:
 	if value_label == null:
 		return
-	value_label.text = str(current) + "/" + str(maximum)
+	if maximum > 0:
+		value_label.text = format_number(current) + "/" + format_number(maximum)
+	else:
+		value_label.text = format_number(current)
+
+func format_number(value: int) -> String:
+	if value >= 1000000000:
+		return format_suffix(value, 1000000000, "B")
+	if value >= 1000000:
+		return format_suffix(value, 1000000, "M")
+	if value >= 1000:
+		return format_suffix(value, 1000, "K")
+	return str(value)
+
+func format_suffix(value: int, divisor: int, suffix: String) -> String:
+	var short_value = float(value) / float(divisor)
+	if short_value >= 100.0 or int(short_value * 10.0) % 10 == 0:
+		return str(int(short_value)) + suffix
+	return str(short_value).pad_decimals(1) + suffix

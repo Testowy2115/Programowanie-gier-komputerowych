@@ -56,9 +56,10 @@ func _process(delta):
 	var target_pos = player.position + offset_from_player
 
 	if current_flower != null and is_instance_valid(current_flower) and current_flower.nectar_amount > 0:
+		var flower_pos = get_node_local_position(current_flower)
 		var orbit = Vector2(cos(bob_time * 2.2 + flight_phase), sin(bob_time * 2.7 + flight_phase)) * 8.0
-		target_pos = current_flower.position + flower_offset + orbit
-		if base_position.distance_to(current_flower.position) < 34.0:
+		target_pos = flower_pos + flower_offset + orbit
+		if base_position.distance_to(flower_pos) < 34.0:
 			current_flower.gather(self, delta)
 	else:
 		var flowers = get_tree().get_nodes_in_group("flowers")
@@ -66,7 +67,8 @@ func _process(delta):
 		var dist = 999999.0
 		for f in flowers:
 			if f.nectar_amount > 0:
-				var d = base_position.distance_to(f.position)
+				var flower_pos = get_node_local_position(f)
+				var d = base_position.distance_to(flower_pos)
 				if d < 180.0 and d < dist:
 					closest = f
 					dist = d
@@ -76,7 +78,7 @@ func _process(delta):
 	base_position = base_position.move_toward(target_pos, speed * delta)
 	
 	if dir.x != 0:
-		sprite.flip_h = dir.x < 0
+		sprite.flip_h = dir.x > 0
 		
 	bob_time += delta
 	var bob_offset = Vector2(0, sin(bob_time * bob_speed) * bob_height)
@@ -86,3 +88,8 @@ func _process(delta):
 func gather_nectar(amount: float):
 	if is_instance_valid(player):
 		player.add_pollen(amount)
+
+func get_node_local_position(node: Node2D) -> Vector2:
+	if get_parent() is Node2D:
+		return get_parent().to_local(node.global_position)
+	return node.global_position

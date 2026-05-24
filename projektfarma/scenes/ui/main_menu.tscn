@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://bchyjr7ri10su"]
+
+[ext_resource type="Script" uid="uid://7ryugu4h75dp" path="res://scenes/ui/main_menu.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://cbyywbv1ho4dk" path="res://assets/game/fonts/04B.TTF" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="1_panel"]
+bg_color = Color(0.08, 0.13, 0.09, 0.92)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="MainMenu" type="CanvasLayer" unique_id=2025619795]
+script = ExtResource("1_script")
+
+[node name="Root" type="Control" parent="." unique_id=2051520424]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="Root" unique_id=1124153380]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.3, 0.62, 0.3, 1)
+
+[node name="MenuBox" type="VBoxContainer" parent="Root" unique_id=489027463]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -145.0
+offset_right = 190.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="Title" type="Label" parent="Root/MenuBox" unique_id=1922783743]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 17
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 63
+text = "BEE RNG"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="Root/MenuBox" unique_id=1320698838]
+custom_minimum_size = Vector2(260, 58)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("1_panel")
+theme_override_styles/pressed = SubResource("1_panel")
+theme_override_styles/hover = SubResource("1_panel")
+text = "PLAY"
+
+[node name="QuitButton" type="Button" parent="Root/MenuBox" unique_id=29255317]
+custom_minimum_size = Vector2(260, 58)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("1_panel")
+theme_override_styles/pressed = SubResource("1_panel")
+theme_override_styles/hover = SubResource("1_panel")
+text = "QUIT"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1565325609]
+volume_db = -8.0
