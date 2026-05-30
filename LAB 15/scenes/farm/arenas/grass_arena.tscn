@@ -1,0 +1,947 @@
+[gd_scene format=3 uid="uid://cd0cyqorq2pka"]
+
+[ext_resource type="Script" uid="uid://834rsqc1lqvi" path="res://scenes/farm/arenas/tile_arena.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://dhy6qfgy70jfj" path="res://assets/game/tiles/grass.png" id="2_grass"]
+[ext_resource type="PackedScene" path="res://scenes/farm/flower.tscn" id="3_flower"]
+[ext_resource type="Script" uid="uid://dn2wxjr4cu35u" path="res://scenes/farm/arenas/grass_decorations.gd" id="4_decorations"]
+[ext_resource type="Texture2D" uid="uid://b0dvq3fjrv3uu" path="res://assets/game/others/Tall_wild_grass.png" id="5_tall_grass"]
+[ext_resource type="Texture2D" uid="uid://d0rkgtnyqgor3" path="res://assets/game/others/short_wild_grass.png" id="6_short_grass"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top"]
+size = Vector2(512, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom"]
+size = Vector2(512, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_left"]
+size = Vector2(16, 384)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(16, 384)
+
+[node name="GrassArena" type="Node2D" unique_id=2069812623]
+script = ExtResource("1_script")
+tile_texture = ExtResource("2_grass")
+
+[node name="Tiles" type="Node2D" parent="." unique_id=1765470448]
+
+[node name="Borders" type="Node2D" parent="." unique_id=835627232]
+
+[node name="Top" type="StaticBody2D" parent="Borders" unique_id=1799722648]
+position = Vector2(0, -200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Top" unique_id=858569397]
+shape = SubResource("RectangleShape2D_top")
+
+[node name="Bottom" type="StaticBody2D" parent="Borders" unique_id=615365625]
+position = Vector2(0, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Bottom" unique_id=804265751]
+shape = SubResource("RectangleShape2D_bottom")
+
+[node name="Left" type="StaticBody2D" parent="Borders" unique_id=1202900756]
+position = Vector2(-264, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Left" unique_id=1211077396]
+shape = SubResource("RectangleShape2D_left")
+
+[node name="Right" type="StaticBody2D" parent="Borders" unique_id=98633876]
+position = Vector2(264, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Borders/Right" unique_id=1682417491]
+shape = SubResource("RectangleShape2D_right")
+
+[node name="WildGrass" type="Node2D" parent="." unique_id=1672250883]
+script = ExtResource("4_decorations")
+tall_texture = ExtResource("5_tall_grass")
+short_texture = ExtResource("6_short_grass")
+spacing = 28
+random_seed = 7
+
+[node name="@Sprite2D@18666" type="Sprite2D" parent="WildGrass" unique_id=175260594]
+texture_filter = 1
+position = Vector2(-220.39436, -159.61195)
+rotation = 0.04193252
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18667" type="Sprite2D" parent="WildGrass" unique_id=1237249724]
+texture_filter = 1
+position = Vector2(-164.91933, -163.6516)
+rotation = -0.064121395
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18668" type="Sprite2D" parent="WildGrass" unique_id=816322822]
+texture_filter = 1
+position = Vector2(-140.89105, -161.62201)
+rotation = 0.046289943
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18669" type="Sprite2D" parent="WildGrass" unique_id=210147382]
+texture_filter = 1
+position = Vector2(-112.35654, -161.4086)
+rotation = -0.013948423
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18670" type="Sprite2D" parent="WildGrass" unique_id=1640095268]
+texture_filter = 1
+position = Vector2(-88.45819, -155.74542)
+rotation = 0.04360371
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18671" type="Sprite2D" parent="WildGrass" unique_id=312443952]
+texture_filter = 1
+position = Vector2(-52.087227, -167.57193)
+rotation = -0.024623975
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18672" type="Sprite2D" parent="WildGrass" unique_id=371902631]
+texture_filter = 1
+position = Vector2(-36.776375, -162.31908)
+rotation = -0.021370046
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18673" type="Sprite2D" parent="WildGrass" unique_id=97572701]
+texture_filter = 1
+position = Vector2(23.453556, -165.99289)
+rotation = -0.0042482163
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18674" type="Sprite2D" parent="WildGrass" unique_id=1204118598]
+texture_filter = 1
+position = Vector2(77.22348, -155.593)
+rotation = -0.024025396
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18675" type="Sprite2D" parent="WildGrass" unique_id=1196093549]
+texture_filter = 1
+position = Vector2(103.74152, -156.72047)
+rotation = -0.052327976
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18676" type="Sprite2D" parent="WildGrass" unique_id=1658245550]
+texture_filter = 1
+position = Vector2(171.54683, -159.17517)
+rotation = -0.0598393
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18677" type="Sprite2D" parent="WildGrass" unique_id=591349478]
+texture_filter = 1
+position = Vector2(192.28217, -163.86708)
+rotation = 0.040854115
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18678" type="Sprite2D" parent="WildGrass" unique_id=475612463]
+texture_filter = 1
+position = Vector2(-226.05695, -136.28865)
+rotation = 0.033145044
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18679" type="Sprite2D" parent="WildGrass" unique_id=1714879960]
+texture_filter = 1
+position = Vector2(-137.94168, -140.26549)
+rotation = -0.061492562
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18680" type="Sprite2D" parent="WildGrass" unique_id=1491230289]
+texture_filter = 1
+position = Vector2(-115.84061, -127.869965)
+rotation = 0.013811969
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18681" type="Sprite2D" parent="WildGrass" unique_id=528717671]
+texture_filter = 1
+position = Vector2(25.24517, -130.48384)
+rotation = 0.05805529
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18682" type="Sprite2D" parent="WildGrass" unique_id=549150918]
+texture_filter = 1
+position = Vector2(79.75473, -138.801)
+rotation = -0.06468881
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18683" type="Sprite2D" parent="WildGrass" unique_id=84056634]
+texture_filter = 1
+position = Vector2(139.4573, -135.39427)
+rotation = 0.04060495
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18684" type="Sprite2D" parent="WildGrass" unique_id=431707342]
+texture_filter = 1
+position = Vector2(167.76198, -132.7866)
+rotation = -0.057424534
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18685" type="Sprite2D" parent="WildGrass" unique_id=1448265280]
+texture_filter = 1
+position = Vector2(189.77362, -138.7816)
+rotation = -0.038448256
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18686" type="Sprite2D" parent="WildGrass" unique_id=506497916]
+texture_filter = 1
+position = Vector2(-230.59143, -102.30762)
+rotation = -0.005218897
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18687" type="Sprite2D" parent="WildGrass" unique_id=1964276106]
+texture_filter = 1
+position = Vector2(-194.20967, -110.80837)
+rotation = 0.017716164
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18688" type="Sprite2D" parent="WildGrass" unique_id=1138096950]
+texture_filter = 1
+position = Vector2(-166.68274, -105.9948)
+rotation = -0.040864237
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18689" type="Sprite2D" parent="WildGrass" unique_id=485000638]
+texture_filter = 1
+position = Vector2(-147.80049, -112.679596)
+rotation = 0.06797428
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18690" type="Sprite2D" parent="WildGrass" unique_id=416549911]
+texture_filter = 1
+position = Vector2(-107.47459, -101.41665)
+rotation = 0.0414472
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18691" type="Sprite2D" parent="WildGrass" unique_id=1274269804]
+texture_filter = 1
+position = Vector2(-59.096397, -104.0624)
+rotation = -0.017604997
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18692" type="Sprite2D" parent="WildGrass" unique_id=973796946]
+texture_filter = 1
+position = Vector2(-36.62963, -106.32699)
+rotation = 0.04678415
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18693" type="Sprite2D" parent="WildGrass" unique_id=1140528354]
+texture_filter = 1
+position = Vector2(-5.6394844, -111.49817)
+rotation = 0.052647866
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18694" type="Sprite2D" parent="WildGrass" unique_id=1584034344]
+texture_filter = 1
+position = Vector2(104.405, -102.79188)
+rotation = -0.0022143102
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18695" type="Sprite2D" parent="WildGrass" unique_id=1530845781]
+texture_filter = 1
+position = Vector2(141.29909, -102.16918)
+rotation = -0.02495035
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18696" type="Sprite2D" parent="WildGrass" unique_id=436722253]
+texture_filter = 1
+position = Vector2(159.93587, -112.97057)
+rotation = -0.057219744
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18697" type="Sprite2D" parent="WildGrass" unique_id=1565851795]
+texture_filter = 1
+position = Vector2(187.8122, -102.1834)
+rotation = 0.013533502
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18698" type="Sprite2D" parent="WildGrass" unique_id=1060796211]
+texture_filter = 1
+position = Vector2(216.05113, -112.02418)
+rotation = -0.0663288
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18699" type="Sprite2D" parent="WildGrass" unique_id=8294337]
+texture_filter = 1
+position = Vector2(-221.4573, -75.58086)
+rotation = 0.040492848
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18700" type="Sprite2D" parent="WildGrass" unique_id=1043227356]
+texture_filter = 1
+position = Vector2(-192.9652, -81.73627)
+rotation = -0.042920846
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18701" type="Sprite2D" parent="WildGrass" unique_id=907771829]
+texture_filter = 1
+position = Vector2(-176.72885, -76.55467)
+rotation = -0.02080024
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18702" type="Sprite2D" parent="WildGrass" unique_id=508623317]
+texture_filter = 1
+position = Vector2(-135.33943, -81.94539)
+rotation = -0.038167313
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18703" type="Sprite2D" parent="WildGrass" unique_id=1565600795]
+texture_filter = 1
+position = Vector2(-111.26863, -73.80634)
+rotation = 0.06681284
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18704" type="Sprite2D" parent="WildGrass" unique_id=2072069301]
+texture_filter = 1
+position = Vector2(-89.92936, -79.29339)
+rotation = 0.005950409
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18705" type="Sprite2D" parent="WildGrass" unique_id=127088157]
+texture_filter = 1
+position = Vector2(-61.89139, -84.85405)
+rotation = 0.06414628
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18706" type="Sprite2D" parent="WildGrass" unique_id=1258775061]
+texture_filter = 1
+position = Vector2(-29.998661, -83.43202)
+rotation = -0.015417797
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18707" type="Sprite2D" parent="WildGrass" unique_id=241623583]
+texture_filter = 1
+position = Vector2(-2.3814888, -72.66896)
+rotation = 0.0687188
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18708" type="Sprite2D" parent="WildGrass" unique_id=1895376393]
+texture_filter = 1
+position = Vector2(59.620064, -79.04266)
+rotation = 0.06886495
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18709" type="Sprite2D" parent="WildGrass" unique_id=2021925729]
+texture_filter = 1
+position = Vector2(75.38995, -76.376366)
+rotation = 0.007961387
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18710" type="Sprite2D" parent="WildGrass" unique_id=541769609]
+texture_filter = 1
+position = Vector2(165.66423, -79.031586)
+rotation = -0.008682155
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18711" type="Sprite2D" parent="WildGrass" unique_id=666540579]
+texture_filter = 1
+position = Vector2(221.29778, -81.24382)
+rotation = 0.05043905
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18712" type="Sprite2D" parent="WildGrass" unique_id=1893842231]
+texture_filter = 1
+position = Vector2(-219.30122, -51.713924)
+rotation = 0.041384865
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18713" type="Sprite2D" parent="WildGrass" unique_id=417525038]
+texture_filter = 1
+position = Vector2(-202.84444, -51.59176)
+rotation = -0.04316146
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18714" type="Sprite2D" parent="WildGrass" unique_id=437778592]
+texture_filter = 1
+position = Vector2(-108.061104, -51.328728)
+rotation = -0.035973057
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18715" type="Sprite2D" parent="WildGrass" unique_id=230597918]
+texture_filter = 1
+position = Vector2(-89.118286, -55.566723)
+rotation = 0.04227245
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18716" type="Sprite2D" parent="WildGrass" unique_id=1863862355]
+texture_filter = 1
+position = Vector2(-3.6819363, -55.002884)
+rotation = -0.011836615
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18717" type="Sprite2D" parent="WildGrass" unique_id=263374291]
+texture_filter = 1
+position = Vector2(29.413761, -50.02507)
+rotation = -0.008530675
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18718" type="Sprite2D" parent="WildGrass" unique_id=476289356]
+texture_filter = 1
+position = Vector2(75.10059, -47.293587)
+rotation = -0.043071985
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18719" type="Sprite2D" parent="WildGrass" unique_id=13338211]
+texture_filter = 1
+position = Vector2(103.05442, -50.238453)
+rotation = -0.016990427
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18720" type="Sprite2D" parent="WildGrass" unique_id=1347689218]
+texture_filter = 1
+position = Vector2(144.20114, -51.278534)
+rotation = 0.03406705
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18721" type="Sprite2D" parent="WildGrass" unique_id=1449168694]
+texture_filter = 1
+position = Vector2(169.04047, -50.820812)
+rotation = -0.046738014
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18722" type="Sprite2D" parent="WildGrass" unique_id=535361230]
+texture_filter = 1
+position = Vector2(195.58626, -51.992977)
+rotation = 0.0014202888
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18723" type="Sprite2D" parent="WildGrass" unique_id=35169194]
+texture_filter = 1
+position = Vector2(222.9714, -44.86715)
+rotation = -0.04966949
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18724" type="Sprite2D" parent="WildGrass" unique_id=1113107094]
+texture_filter = 1
+position = Vector2(-229.27628, -17.325024)
+rotation = -0.016051367
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18725" type="Sprite2D" parent="WildGrass" unique_id=1866143810]
+texture_filter = 1
+position = Vector2(-197.80746, -25.564299)
+rotation = -0.027492918
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18726" type="Sprite2D" parent="WildGrass" unique_id=1376979749]
+texture_filter = 1
+position = Vector2(-62.959187, -25.291113)
+rotation = 0.021034261
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18727" type="Sprite2D" parent="WildGrass" unique_id=506889420]
+texture_filter = 1
+position = Vector2(-4.326548, -24.740501)
+rotation = 0.016179727
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18728" type="Sprite2D" parent="WildGrass" unique_id=277208419]
+texture_filter = 1
+position = Vector2(20.42448, -15.998175)
+rotation = 0.016798971
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18729" type="Sprite2D" parent="WildGrass" unique_id=1991118728]
+texture_filter = 1
+position = Vector2(87.86719, -26.314657)
+rotation = -0.023988394
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18730" type="Sprite2D" parent="WildGrass" unique_id=524750417]
+texture_filter = 1
+position = Vector2(116.25369, -26.750168)
+rotation = -0.012156943
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18731" type="Sprite2D" parent="WildGrass" unique_id=1317615885]
+texture_filter = 1
+position = Vector2(134.48384, -27.794506)
+rotation = -0.04355996
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18732" type="Sprite2D" parent="WildGrass" unique_id=1651681178]
+texture_filter = 1
+position = Vector2(166.2556, -27.429762)
+rotation = -0.03971133
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18733" type="Sprite2D" parent="WildGrass" unique_id=31341242]
+texture_filter = 1
+position = Vector2(188.22266, -23.142315)
+rotation = 0.04320651
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18734" type="Sprite2D" parent="WildGrass" unique_id=1002715987]
+texture_filter = 1
+position = Vector2(221.1714, -22.625822)
+rotation = 0.03111064
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18735" type="Sprite2D" parent="WildGrass" unique_id=1024756677]
+texture_filter = 1
+position = Vector2(-227.23346, 1.5096612)
+rotation = -0.0518847
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18736" type="Sprite2D" parent="WildGrass" unique_id=400631442]
+texture_filter = 1
+position = Vector2(-198.93523, 0.7307739)
+rotation = 0.064372495
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18737" type="Sprite2D" parent="WildGrass" unique_id=1551103348]
+texture_filter = 1
+position = Vector2(-173.23387, 2.8868122)
+rotation = -0.041002925
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18738" type="Sprite2D" parent="WildGrass" unique_id=1690097095]
+texture_filter = 1
+position = Vector2(-59.626682, 1.5674529)
+rotation = -0.027345903
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18739" type="Sprite2D" parent="WildGrass" unique_id=1326237571]
+texture_filter = 1
+position = Vector2(1.6308641, 10.639593)
+rotation = -0.06682761
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18740" type="Sprite2D" parent="WildGrass" unique_id=38758314]
+texture_filter = 1
+position = Vector2(30.093676, 7.0539265)
+rotation = 0.012396324
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18741" type="Sprite2D" parent="WildGrass" unique_id=1779399490]
+texture_filter = 1
+position = Vector2(56.00405, 0.004073143)
+rotation = -0.006238322
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18742" type="Sprite2D" parent="WildGrass" unique_id=1470846155]
+texture_filter = 1
+position = Vector2(82.8065, 11.916895)
+rotation = -0.018811075
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18743" type="Sprite2D" parent="WildGrass" unique_id=1078311050]
+texture_filter = 1
+position = Vector2(106.30435, 9.618616)
+rotation = 0.04308751
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18744" type="Sprite2D" parent="WildGrass" unique_id=210825239]
+texture_filter = 1
+position = Vector2(193.64938, -0.92245054)
+rotation = -0.0206356
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18745" type="Sprite2D" parent="WildGrass" unique_id=436754827]
+texture_filter = 1
+position = Vector2(-232.84167, 28.739784)
+rotation = 0.047009252
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18746" type="Sprite2D" parent="WildGrass" unique_id=1918734050]
+texture_filter = 1
+position = Vector2(-199.79045, 36.23595)
+rotation = -0.007752341
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18747" type="Sprite2D" parent="WildGrass" unique_id=590690756]
+texture_filter = 1
+position = Vector2(-165.67786, 30.715202)
+rotation = 0.015863786
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18748" type="Sprite2D" parent="WildGrass" unique_id=451762710]
+texture_filter = 1
+position = Vector2(-147.96773, 32.04629)
+rotation = -0.0241738
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18749" type="Sprite2D" parent="WildGrass" unique_id=2024473802]
+texture_filter = 1
+position = Vector2(-113.75118, 38.673195)
+rotation = -0.00970081
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18750" type="Sprite2D" parent="WildGrass" unique_id=531666054]
+texture_filter = 1
+position = Vector2(-90.02056, 30.050299)
+rotation = -0.00010494935
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18751" type="Sprite2D" parent="WildGrass" unique_id=1959966838]
+texture_filter = 1
+position = Vector2(-62.82719, 38.024113)
+rotation = 0.0571911
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18752" type="Sprite2D" parent="WildGrass" unique_id=151530539]
+texture_filter = 1
+position = Vector2(-33.136963, 34.215736)
+rotation = 0.009409472
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18753" type="Sprite2D" parent="WildGrass" unique_id=41631123]
+texture_filter = 1
+position = Vector2(-1.2297468, 38.645935)
+rotation = 0.02353205
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18754" type="Sprite2D" parent="WildGrass" unique_id=1484854813]
+texture_filter = 1
+position = Vector2(30.458696, 30.705431)
+rotation = -0.013726781
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18755" type="Sprite2D" parent="WildGrass" unique_id=1508075002]
+texture_filter = 1
+position = Vector2(51.93557, 35.428738)
+rotation = -0.04676902
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18756" type="Sprite2D" parent="WildGrass" unique_id=1300348530]
+texture_filter = 1
+position = Vector2(77.39135, 39.723717)
+rotation = 0.009898562
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18757" type="Sprite2D" parent="WildGrass" unique_id=1362904356]
+texture_filter = 1
+position = Vector2(163.0347, 38.829754)
+rotation = -0.047801577
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18758" type="Sprite2D" parent="WildGrass" unique_id=1076727592]
+texture_filter = 1
+position = Vector2(199.57956, 40.746357)
+rotation = -0.008244639
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18759" type="Sprite2D" parent="WildGrass" unique_id=695459450]
+texture_filter = 1
+position = Vector2(-224.787, 58.55638)
+rotation = 0.06946437
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18760" type="Sprite2D" parent="WildGrass" unique_id=1617724621]
+texture_filter = 1
+position = Vector2(-197.82559, 66.38243)
+rotation = 0.038544845
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18761" type="Sprite2D" parent="WildGrass" unique_id=1545305150]
+texture_filter = 1
+position = Vector2(-172.1072, 60.777714)
+rotation = 0.033673983
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18762" type="Sprite2D" parent="WildGrass" unique_id=527593604]
+texture_filter = 1
+position = Vector2(-113.63717, 65.50229)
+rotation = -0.05419183
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18763" type="Sprite2D" parent="WildGrass" unique_id=2024581863]
+texture_filter = 1
+position = Vector2(-83.174576, 68.84583)
+rotation = 0.06733534
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18764" type="Sprite2D" parent="WildGrass" unique_id=878360494]
+texture_filter = 1
+position = Vector2(32.96618, 68.28582)
+rotation = 0.008660466
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18765" type="Sprite2D" parent="WildGrass" unique_id=1364919253]
+texture_filter = 1
+position = Vector2(60.988346, 60.954323)
+rotation = 0.053990114
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18766" type="Sprite2D" parent="WildGrass" unique_id=1589387888]
+texture_filter = 1
+position = Vector2(109.89459, 55.69709)
+rotation = -0.019634662
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18767" type="Sprite2D" parent="WildGrass" unique_id=512555732]
+texture_filter = 1
+position = Vector2(142.24783, 55.932655)
+rotation = 0.063597046
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18768" type="Sprite2D" parent="WildGrass" unique_id=1759254015]
+texture_filter = 1
+position = Vector2(164.8944, 61.372593)
+rotation = 0.06556225
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18769" type="Sprite2D" parent="WildGrass" unique_id=741217858]
+texture_filter = 1
+position = Vector2(191.79091, 68.1077)
+rotation = 0.056089543
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18770" type="Sprite2D" parent="WildGrass" unique_id=1692596444]
+texture_filter = 1
+position = Vector2(227.71327, 64.32287)
+rotation = 0.06447678
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18771" type="Sprite2D" parent="WildGrass" unique_id=888733913]
+texture_filter = 1
+position = Vector2(-219.14877, 88.55966)
+rotation = 0.009321239
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18772" type="Sprite2D" parent="WildGrass" unique_id=829931242]
+texture_filter = 1
+position = Vector2(-202.73271, 89.36354)
+rotation = -0.042211786
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18773" type="Sprite2D" parent="WildGrass" unique_id=252788174]
+texture_filter = 1
+position = Vector2(-170.23157, 94.89293)
+rotation = -0.06701253
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18774" type="Sprite2D" parent="WildGrass" unique_id=1603055576]
+texture_filter = 1
+position = Vector2(-145.91216, 88.00556)
+rotation = 0.01342358
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18775" type="Sprite2D" parent="WildGrass" unique_id=1454128703]
+texture_filter = 1
+position = Vector2(-92.92126, 87.21548)
+rotation = 0.0016089155
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18776" type="Sprite2D" parent="WildGrass" unique_id=1936925988]
+texture_filter = 1
+position = Vector2(-31.973206, 87.98249)
+rotation = -0.031697635
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18777" type="Sprite2D" parent="WildGrass" unique_id=629895491]
+texture_filter = 1
+position = Vector2(19.76059, 94.69072)
+rotation = 0.052377705
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18778" type="Sprite2D" parent="WildGrass" unique_id=1332064813]
+texture_filter = 1
+position = Vector2(79.557304, 87.520996)
+rotation = 0.008125346
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18779" type="Sprite2D" parent="WildGrass" unique_id=560838651]
+texture_filter = 1
+position = Vector2(106.77582, 95.27699)
+rotation = 0.007966114
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18780" type="Sprite2D" parent="WildGrass" unique_id=981131582]
+texture_filter = 1
+position = Vector2(137.45462, 91.81232)
+rotation = 0.06694814
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18781" type="Sprite2D" parent="WildGrass" unique_id=1276123883]
+texture_filter = 1
+position = Vector2(159.19997, 84.924805)
+rotation = 0.059662364
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18782" type="Sprite2D" parent="WildGrass" unique_id=1421671493]
+texture_filter = 1
+position = Vector2(198.26285, 88.22804)
+rotation = 0.052630536
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18783" type="Sprite2D" parent="WildGrass" unique_id=560701789]
+texture_filter = 1
+position = Vector2(227.81683, 88.02664)
+rotation = 0.062555365
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18784" type="Sprite2D" parent="WildGrass" unique_id=138677440]
+texture_filter = 1
+position = Vector2(-232.34709, 117.19495)
+rotation = -0.046492424
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18785" type="Sprite2D" parent="WildGrass" unique_id=1371138486]
+texture_filter = 1
+position = Vector2(-193.40376, 120.14774)
+rotation = 0.05783394
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18786" type="Sprite2D" parent="WildGrass" unique_id=1329042733]
+texture_filter = 1
+position = Vector2(-168.51674, 124.5218)
+rotation = -0.059170406
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18787" type="Sprite2D" parent="WildGrass" unique_id=2061455910]
+texture_filter = 1
+position = Vector2(-139.45206, 116.93901)
+rotation = -0.06034591
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18788" type="Sprite2D" parent="WildGrass" unique_id=577542799]
+texture_filter = 1
+position = Vector2(-116.580696, 112.1443)
+rotation = -0.03865193
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18789" type="Sprite2D" parent="WildGrass" unique_id=1984653035]
+texture_filter = 1
+position = Vector2(-79.79739, 123.58124)
+rotation = -0.04025333
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18790" type="Sprite2D" parent="WildGrass" unique_id=353414905]
+texture_filter = 1
+position = Vector2(-55.436256, 115.232796)
+rotation = -0.058861647
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18791" type="Sprite2D" parent="WildGrass" unique_id=1459955227]
+texture_filter = 1
+position = Vector2(-23.471684, 123.316216)
+rotation = -0.05057551
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18792" type="Sprite2D" parent="WildGrass" unique_id=231067359]
+texture_filter = 1
+position = Vector2(2.1410313, 122.96649)
+rotation = -0.047213826
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18793" type="Sprite2D" parent="WildGrass" unique_id=241182466]
+texture_filter = 1
+position = Vector2(24.672173, 114.04994)
+rotation = -0.033724386
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18794" type="Sprite2D" parent="WildGrass" unique_id=1218905838]
+texture_filter = 1
+position = Vector2(51.62033, 112.96519)
+rotation = -0.00039041942
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18795" type="Sprite2D" parent="WildGrass" unique_id=1843921877]
+texture_filter = 1
+position = Vector2(79.598305, 121.15924)
+rotation = 0.04159716
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18796" type="Sprite2D" parent="WildGrass" unique_id=1257840540]
+texture_filter = 1
+position = Vector2(112.818695, 112.524734)
+rotation = 0.059524406
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18797" type="Sprite2D" parent="WildGrass" unique_id=1864498082]
+texture_filter = 1
+position = Vector2(135.82745, 119.73724)
+rotation = -0.03712543
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18798" type="Sprite2D" parent="WildGrass" unique_id=1848473782]
+texture_filter = 1
+position = Vector2(226.5486, 115.169365)
+rotation = -0.009090263
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18799" type="Sprite2D" parent="WildGrass" unique_id=807985619]
+texture_filter = 1
+position = Vector2(-226.17853, 142.90912)
+rotation = -0.01987389
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18800" type="Sprite2D" parent="WildGrass" unique_id=267683682]
+texture_filter = 1
+position = Vector2(-191.46948, 143.6646)
+rotation = -0.033910353
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18801" type="Sprite2D" parent="WildGrass" unique_id=1579481828]
+texture_filter = 1
+position = Vector2(-166.43114, 152.1061)
+rotation = 0.052881856
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18802" type="Sprite2D" parent="WildGrass" unique_id=1261596015]
+texture_filter = 1
+position = Vector2(-148.71597, 149.04912)
+rotation = -0.024462812
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18803" type="Sprite2D" parent="WildGrass" unique_id=1253223522]
+texture_filter = 1
+position = Vector2(-111.41798, 139.47116)
+rotation = -0.011620766
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18804" type="Sprite2D" parent="WildGrass" unique_id=1021925710]
+texture_filter = 1
+position = Vector2(-86.99196, 149.24973)
+rotation = 0.062171496
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18805" type="Sprite2D" parent="WildGrass" unique_id=282881897]
+texture_filter = 1
+position = Vector2(-58.961193, 143.11697)
+rotation = -0.019517075
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18806" type="Sprite2D" parent="WildGrass" unique_id=1974241062]
+texture_filter = 1
+position = Vector2(59.15486, 152.80667)
+rotation = -0.008661702
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18807" type="Sprite2D" parent="WildGrass" unique_id=908315579]
+texture_filter = 1
+position = Vector2(138.51393, 147.69762)
+rotation = -0.02613707
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18808" type="Sprite2D" parent="WildGrass" unique_id=965559542]
+texture_filter = 1
+position = Vector2(169.64725, 150.92058)
+rotation = -0.06516004
+texture = ExtResource("6_short_grass")
+
+[node name="@Sprite2D@18809" type="Sprite2D" parent="WildGrass" unique_id=1716339996]
+texture_filter = 1
+position = Vector2(194.95584, 143.14085)
+rotation = 0.0042385873
+texture = ExtResource("5_tall_grass")
+
+[node name="@Sprite2D@18810" type="Sprite2D" parent="WildGrass" unique_id=1263184605]
+texture_filter = 1
+position = Vector2(217.82025, 146.97493)
+rotation = -0.051257033
+texture = ExtResource("5_tall_grass")
+
+[node name="Flowers" type="Node2D" parent="." unique_id=756294194]
+
+[node name="PinkTulipan" parent="Flowers" unique_id=783106586 instance=ExtResource("3_flower")]
+position = Vector2(-160, -88)
+texture_path = "res://assets/game/flowers/grass/pink_tulipan.png"
+
+[node name="Rose" parent="Flowers" unique_id=1785709519 instance=ExtResource("3_flower")]
+position = Vector2(-64, 70)
+texture_path = "res://assets/game/flowers/grass/rose.png"
+
+[node name="PinkTulipan2" parent="Flowers" unique_id=910459699 instance=ExtResource("3_flower")]
+position = Vector2(84, -48)
+texture_path = "res://assets/game/flowers/grass/pink_tulipan.png"
+
+[node name="Rose2" parent="Flowers" unique_id=675270663 instance=ExtResource("3_flower")]
+position = Vector2(162, 92)
+texture_path = "res://assets/game/flowers/grass/rose.png"
