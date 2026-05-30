@@ -1,0 +1,5 @@
+res://scenes/ui/farm_ui.gd
+res://scenes/ui/farm_ui.tscn
+res://scenes/characters/player/player.gd
+res://scenes/ui/upgrade_panel.tscn
+res://scenes/farm/farm.gd

@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://duo6b8teh4nn6"]
+
+[ext_resource type="Texture2D" uid="uid://bbqm3bs07d20l" path="res://assets/game/characters/farmerplayer.png" id="1_7uws0"]
+[ext_resource type="Script" uid="uid://daw34b45rco5v" path="res://scenes/characters/player/player.gd" id="1_12345"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hv5x3"]
+radius = 25.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t61fv"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_686vu"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hss88"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qd3e3"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6avc5"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mk55u"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(192, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuses"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42irl"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xnwo"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uws0"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djydg"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsn6e"]
+atlas = ExtResource("1_7uws0")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bcx1r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t61fv")
+}],
+"loop": true,
+"name": &"idle_back",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_686vu")
+}],
+"loop": true,
+"name": &"idle_front",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hss88")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qd3e3")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6avc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mk55u")
+}],
+"loop": true,
+"name": &"walk_back",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuses")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_42irl")
+}],
+"loop": true,
+"name": &"walk_front",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3xnwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uws0")
+}],
+"loop": true,
+"name": &"walk_left",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djydg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsn6e")
+}],
+"loop": true,
+"name": &"walk_right",
+"speed": 3.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=1735978271]
+script = ExtResource("1_12345")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1687607415]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_hv5x3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=121007060]
+sprite_frames = SubResource("SpriteFrames_bcx1r")
+animation = &"walk_right"
+autoplay = "idle_front"
+
+[node name="Area2D" type="Area2D" parent="." unique_id=96508427]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1687607414]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_hv5x3")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=200136013]
+zoom = Vector2(1, 1)
+
+[node name="FootstepPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -12.0
