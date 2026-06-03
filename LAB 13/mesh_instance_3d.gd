@@ -1,0 +1,85 @@
+extends MeshInstance3D
+
+@export var move_speed: float = 5.0
+
+const limit_x: float = 2.5
+const limit_y: float = 2.0
+
+
+@export var max_hp := 5
+@export var roll_action := "ui_select"
+
+var is_invincible := false
+var is_roll_active := false
+
+@export var bullet_scene: PackedScene
+var _shoot_cooldown: float = 0.0
+@export var _shoot_delay: float = 0.3
+
+func _ready() -> void:
+	add_to_group("player")
+	if has_node("Area3D"):
+		$Area3D.body_entered.connect(_on_body_entered)
+		$Area3D.area_entered.connect(_on_area_entered)
+
+func _process(delta: float) -> void:
+	var dir := Vector2.ZERO
+
+	if Input.is_action_pressed("ui_left"):
+		dir.x -= 1.0
+	if Input.is_action_pressed("ui_right"):
+		dir.x += 1.0
+	if Input.is_action_pressed("ui_up"):
+		dir.y += 1.0
+	if Input.is_action_pressed("ui_down"):
+		dir.y -= 1.0
+
+	position.x += dir.x * move_speed * delta
+	position.y += dir.y * move_speed * delta
+
+	position.x = clamp(position.x, -limit_x, limit_x)
+	position.y = clamp(position.y, -limit_y, limit_y)
+
+
+	_shoot_cooldown -= delta
+
+	if Input.is_action_just_pressed("ui_accept") and _shoot_cooldown <= 0.0:
+		shoot()
+		_shoot_cooldown = _shoot_delay
+		
+	if Input.is_action_just_pressed(roll_action):
+		await _try_barrel_roll()
+		
+func _on_body_entered(body: Node) -> void:
+	if body is StaticBody3D:
+		_take_damage(1)
+
+func _on_area_entered(area: Area3D) -> void:
+	_take_damage(1)
+
+	if (int(area.collision_layer) & (1 << 3)) != 0:
+		var bullet := area.get_parent()
+		if bullet != null:
+			bullet.queue_free()
+
+func _take_damage(amount: int) -> void:
+	if is_invincible:
+		return
+	GameManager.player_hit(amount)
+	
+func _try_barrel_roll() -> void:
+	if is_roll_active:
+		return
+	is_roll_active = true
+	is_invincible = true
+	$AnimationPlayer.play("barrel_roll")
+	await $AnimationPlayer.animation_finished
+	is_invincible = false
+	is_roll_active = false
+		
+func shoot():
+	if bullet_scene:
+		var bullet = bullet_scene.instantiate()
+		get_tree().root.add_child(bullet)
+		bullet.global_position = global_position
+		bullet.direction = Vector3(0, 0, -1)

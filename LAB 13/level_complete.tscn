@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dn2ne7t4k6nbu"]
+
+[ext_resource type="Script" uid="uid://cw2v4h5dr1vlr" path="res://level_complete.gd" id="1_script"]
+
+[node name="LevelComplete" type="Control" unique_id=1812038419]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=475374159]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.3, 0.05, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1900144203]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=2060392263]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Poziom Ukończony"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer" unique_id=1389412903]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Wynik: "
+horizontal_alignment = 1
+
+[node name="MenuButton" type="Button" parent="VBoxContainer" unique_id=904062007]
+layout_mode = 2
+text = "Menu"
