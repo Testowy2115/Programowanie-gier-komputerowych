@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://tm5b0bgaghi8"]
+
+[ext_resource type="Script" uid="uid://cxjwb6xo4an5v" path="res://enemy.gd" id="1_7k104"]
+[ext_resource type="PackedScene" uid="uid://d2cc6v8nyfw2u" path="res://bullet.tscn" id="2_4gyqm"]
+[ext_resource type="PackedScene" uid="uid://b2t30x6nekm2a" path="res://explosion.tscn" id="3_explosion"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xaro"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7k104"]
+size = Vector3(1.2, 1.2, 1.2)
+
+[node name="Enemy" type="Node3D" unique_id=119509302]
+script = ExtResource("1_7k104")
+enemy_bullet_scene = ExtResource("2_4gyqm")
+explosion_scene = ExtResource("3_explosion")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=579083825]
+mesh = SubResource("BoxMesh_7xaro")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=486672064]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1849831770]
+shape = SubResource("BoxShape3D_7k104")

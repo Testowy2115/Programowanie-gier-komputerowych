@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2t30x6nekm2a"]
+
+[ext_resource type="Script" path="res://explosion.gd" id="1_explosion"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_explosion"]
+spread = 180.0
+initial_velocity_min = 4.0
+initial_velocity_max = 10.0
+scale_min = 0.2
+scale_max = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_explosion"]
+albedo_color = Color(1, 0.45, 0.08, 1)
+emission_enabled = true
+emission = Color(1, 0.28, 0.02, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_explosion"]
+material = SubResource("StandardMaterial3D_explosion")
+radius = 0.16
+height = 0.32
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_explosion")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = true
+amount = 48
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_explosion")
+draw_pass_1 = SubResource("SphereMesh_explosion")
